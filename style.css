@@ -4,6 +4,35 @@ body {
   margin: 0;
 }
 
+header {
+	background-color: lightgray;
+	margin-bottom: 30px;
+}
+
+nav a {
+	text-decoration: none;
+	color: black;
+	margin-left: 200px;
+	transition: text-decoration 0.3s ease, font-size 0.3s ease;
+}
+
+nav a:hover {
+	color: orange;
+	text-decoration: underline;
+	font-size: 1.1rem;
+}
+
+.footer {
+	margin-top: 20px;
+	padding: 5px 0;
+	width: 100%;
+	margin: 0;
+	bottom: 0;
+	background-color: lightgray;
+	color: black;
+	text-align: center;
+}
+
 .centered-container {
   align-items: center;
   width: 100%;
@@ -23,20 +52,22 @@ body {
 }
 
 .title-part {
+	margin-left: 20px;
 	display: flex;
-    justify-content: center;
     align-items: center;
 }
 
-button {
+.post-button {
   border: 1px solid #ddd;
+  height: 40px;
+  width: 100px;
   border-radius: 3px;
   margin-left: 20px;
   transition: transform 0.3s ease;
 }
 
-button:hover {
-  transform: scale(1.5);
+.post-button:hover {
+  transform: scale(1.2);
 }
 
 h1 {
@@ -80,12 +111,13 @@ textarea {
   margin-top: 20px;
   max-width: 80%; 
   background-color: #f9f9f9;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s, transform 0.3s ease;
   word-wrap: break-word; 
   display: inline-block; 
   box-sizing: border-box;
 }
 
 #messageContainer div:hover {
+  transform: scale(1.1);
   background-color: yellow;
 }

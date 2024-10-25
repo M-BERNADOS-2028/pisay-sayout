@@ -60,7 +60,7 @@
 		  snapshot.forEach((doc) => {
 			const data = doc.data();
 			const message = data.text;
-			const timestamp = data.timestamp ? data.timestamp.toDate().toLocaleString() : "Just now";
+			const timestamp = data.timestamp ? data.timestamp.toDate().toLocaleString() : "Sending...";
 			
 			const messageDiv = document.createElement("div");
 			messageDiv.innerHTML = `<strong>${message}</strong><br><small>${timestamp}</small>`;
@@ -73,18 +73,30 @@
 	  <link rel="stylesheet" href="style.css">
 	</head>
 	<body>
+		<header>
+			<div class="title-part">
+				<h1>PISAY SAYOUT</h1>
+				<h2>Beta</h2>
+				
+				<nav>
+					<a href="index.html">SAYOUT</a>
+					<a href="#">CONTACT</a>
+					<a href="#">REPORT ISSUES</a>
+				</nav>
+		    </div>
+		</header>
 		<div class="centered-container"z>
-		  <div class="title-part">
-			<h1>PISAY SAYOUT</h1>
-			<h2>Beta</h2>
-		  </div>
 		  <form id="messageForm">
 			<div class="text-area">
 				<textarea id="messageInput" placeholder="Say something..."></textarea>
-				<button type="submit">Post</button>
+				<button class="post-button" type="submit">Post</button>
 			</div>
 		  </form>
 		  <div class="text-messages" id="messageContainer"></div>
+		</div>
+		
+		<div class="footer">
+			<p>© Copyright PISAY SAYOUT</p>
 		</div>
 	</body>
 </html>
