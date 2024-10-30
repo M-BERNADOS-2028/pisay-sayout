@@ -43,7 +43,7 @@
 						status: "pending"
 					});
 					document.getElementById("postInput").value = ""; 
-					alert("Post submitted for approval.");
+					alert("Your post has been submitted for admin approval. It will appear publicly once reviewed and approved. Note: Any inappropriate or offensive content will be rejected.");
 				} catch (error) {
 					console.error("Error submitting post: ", error); 
 				}
@@ -53,15 +53,17 @@
 			async function loadVerifiedPosts() {
 				const postContainer = document.getElementById("postContainer");
 				postContainer.innerHTML = ""; 
-				const q = query(verifiedPostsRef, orderBy("timestamp", "asc"));
+				const q = query(verifiedPostsRef, orderBy("timestamp", "desc"));
 
 				
 				onSnapshot(q, (snapshot) => {
+					postContainer.innerHTML = "";
 					snapshot.forEach((doc) => {
 						const postData = doc.data();
 						const postElement = document.createElement("div");
 						postElement.className = "post";
 						postElement.innerHTML = `
+							<p><em>Posted by Anonymous</em></p>
 							<p><strong>${postData.text}</strong></p>
 							<small>Posted on: ${new Date(postData.timestamp.toMillis()).toLocaleString()}</small>
 						`;
