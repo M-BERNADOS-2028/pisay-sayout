@@ -98,12 +98,12 @@ button:hover {
 }
 
 #postContainer {
-  width: 80%;
-  max-width: 600px;
-  display: flex;
-  flex-direction: row; 
-  flex-wrap: wrap; 
-  gap: 15px;
+	width: 80%;
+	max-width: 1200px;
+	display: flex;
+	flex-direction: row; 
+	flex-wrap: wrap; 
+	gap: 15px;
 }
 
 .post {
@@ -129,3 +129,24 @@ button:hover {
   font-size: 0.8rem;
   color: #666;
 }
+
+.like-container {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.like-button {
+    background-color: #4A148C;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.like-button:hover {
+    background-color: #6A1B9A;
+}
+
