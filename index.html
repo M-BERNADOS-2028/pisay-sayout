@@ -32,7 +32,12 @@
 
 		messageForm.addEventListener("submit", async (e) => {
 		  e.preventDefault();
-		  const messageText = messageInput.value;
+		  const messageText = messageInput.value.trim(); // Trim whitespace from the input
+
+		  if (!messageText) {
+			alert("Message cannot be empty."); 
+			return; 
+		  }
 
 		  try {
 			await addDoc(collection(db, "messages"), {
@@ -44,11 +49,11 @@
 			const messagesSnapshot = await getDocs(collection(db, "messages"));
 			const messageCount = messagesSnapshot.size;
 
-			if (messageCount > 10) {
+			if (messageCount > 20) {
 			  const oldestMessagesQuery = query(
 				collection(db, "messages"),
 				orderBy("timestamp"),
-				limit(messageCount - 10) 
+				limit(messageCount - 20) 
 			  );
 
 			  const oldestMessagesSnapshot = await getDocs(oldestMessagesQuery);
@@ -60,6 +65,7 @@
 			console.error("Error posting message: ", error);
 		  }
 		});
+
 
 		const messagesQuery = query(collection(db, "messages"), orderBy("timestamp", "desc"));
 		onSnapshot(messagesQuery, (snapshot) => {
