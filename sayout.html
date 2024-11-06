@@ -1,110 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>PISAY SAYOUT</title>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PISAY SAYOUT</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+		import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, orderBy, where, getDocs } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-		<script type="module">
-			import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-			import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, orderBy } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+		const firebaseConfig = {
+			apiKey: "AIzaSyDemeKsWgQhIxa7fvWm3rf9F5AcOELBdaY",
+			authDomain: "pisay-sayout.firebaseapp.com",
+			projectId: "pisay-sayout",
+			storageBucket: "pisay-sayout.appspot.com",
+			messagingSenderId: "682766827567",
+			appId: "1:682766827567:web:f7a51de6fe4865f3a706da",
+			measurementId: "G-TVRP1413RD"
+		};
 
-			const firebaseConfig = {
-				apiKey: "AIzaSyDemeKsWgQhIxa7fvWm3rf9F5AcOELBdaY",
-				authDomain: "pisay-sayout.firebaseapp.com",
-				projectId: "pisay-sayout",
-				storageBucket: "pisay-sayout.appspot.com",
-				messagingSenderId: "682766827567",
-				appId: "1:682766827567:web:f7a51de6fe4865f3a706da",
-				measurementId: "G-TVRP1413RD"
-			};
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
 
-			const app = initializeApp(firebaseConfig);
-			const db = getFirestore(app);
+		const pendingPostsRef = collection(db, "PendingPosts");
+		const verifiedPostsRef = collection(db, "VerifiedPosts");
 
-			
-			const pendingPostsRef = collection(db, "PendingPosts");
-			const verifiedPostsRef = collection(db, "VerifiedPosts");
+		let lastPostTime = 0;
 
-			
-			async function submitPost(event) {
-				event.preventDefault(); 
-				const postContent = document.getElementById("postInput").value; 
+		async function submitPost(event) {
+			event.preventDefault();
+			const postContent = document.getElementById("postInput").value.trim();
+			const currentTime = Date.now();
 
-				try {
-					
-					await addDoc(pendingPostsRef, {
-						text: postContent,
-						timestamp: serverTimestamp(),
-						status: "pending"
-					});
-					document.getElementById("postInput").value = ""; 
-					alert("Your post has been submitted for admin approval. It will appear publicly once reviewed and approved. Note: Any inappropriate or offensive content will be rejected.");
-				} catch (error) {
-					console.error("Error submitting post: ", error); 
-				}
+			if (currentTime - lastPostTime < 60000) {
+				alert("Please wait at least 1 minute before posting again.");
+				return;
 			}
 
-			
-			async function loadVerifiedPosts() {
-				const postContainer = document.getElementById("postContainer");
-				postContainer.innerHTML = ""; 
-				const q = query(verifiedPostsRef, orderBy("timestamp", "desc"));
+			const duplicateQuery = query(
+				pendingPostsRef,
+				where("text", "==", postContent)
+			);
+			const duplicateSnapshot = await getDocs(duplicateQuery);
 
-				
-				onSnapshot(q, (snapshot) => {
-					postContainer.innerHTML = "";
-					snapshot.forEach((doc) => {
-						const postData = doc.data();
-						const postElement = document.createElement("div");
-						postElement.className = "post";
-						postElement.innerHTML = `
-							<p><em>Posted by Anonymous</em></p>
-							<p><strong>${postData.text}</strong></p>
-							<small>Posted on: ${new Date(postData.timestamp.toMillis()).toLocaleString()}</small>
-						`;
-						postContainer.appendChild(postElement);
-					});
+			if (!postContent) {
+				alert("Post cannot be empty.");
+				return;
+			} else if (duplicateSnapshot.size > 0) {
+				alert("Duplicate post detected. Please post something unique.");
+				return;
+			}
+
+			try {
+				await addDoc(pendingPostsRef, {
+					text: postContent,
+					timestamp: serverTimestamp(),
+					status: "pending"
 				});
+				document.getElementById("postInput").value = "";
+				lastPostTime = currentTime; 
+				alert("Your post has been submitted for admin approval. It will appear publicly once reviewed.");
+			} catch (error) {
+				console.error("Error submitting post: ", error);
 			}
+		}
 
-			// Load verified posts when the page loads
-			document.addEventListener("DOMContentLoaded", () => {
-				loadVerifiedPosts(); // Load posts on page load
-				document.getElementById("postForm").addEventListener("submit", submitPost);
+		async function loadVerifiedPosts() {
+			const postContainer = document.getElementById("postContainer");
+			postContainer.innerHTML = "";
+			const q = query(verifiedPostsRef, orderBy("timestamp", "desc"));
+
+			onSnapshot(q, (snapshot) => {
+				postContainer.innerHTML = "";
+				snapshot.forEach((doc) => {
+					const postData = doc.data();
+					const postElement = document.createElement("div");
+					postElement.className = "post";
+					postElement.innerHTML = `
+						<p><em>Posted by Anonymous</em></p>
+						<p><strong>${postData.text}</strong></p>
+						<small>Posted on: ${new Date(postData.timestamp.toMillis()).toLocaleString()}</small>
+					`;
+					postContainer.appendChild(postElement);
+				});
 			});
-		</script>
+		}
 
-		<link rel="stylesheet" href="sayout.css">
-	</head>
-	<body>
-		<header>
-			<div class="title-part">
-				<h1>PISAY SAYOUT</h1>
-				<h2>Beta</h2>
-				<h4>v1.3</h4>
+		document.addEventListener("DOMContentLoaded", () => {
+			loadVerifiedPosts();
+			document.getElementById("postForm").addEventListener("submit", submitPost);
+		});
+	</script>
 
-				<nav>
-					<a href="index.html">GLOBAL CHAT</a>
-					<a href="sayout.html" style="font-weight: bold; color: #FFFC33; text-decoration: underline; font-size: 1.1rem;">SAYOUT</a>
-					<a href="#">CONTACT</a>
-					<a href="#">REPORT ISSUES</a>
-				</nav>
-			</div>
-		</header>
-		<form id="postForm">
-			<textarea id="postInput" placeholder="What's on your mind?" maxlength="500"></textarea>
-			<button type="submit">Post</button>
-		</form>
-		
-		<div id="postContainer"></div>
+	<link rel="stylesheet" href="sayout.css">
+</head>
+<body>
+	<header>
+		<div class="title-part">
+			<h1>PISAY SAYOUT</h1>
+			<h2>Beta</h2>
+			<h4>v1.3</h4>
 
-		<div class="footer">
-			<p>© Copyright @PISAY-SAYOUT</p>
+			<nav>
+				<a href="index.html">GLOBAL CHAT</a>
+				<a href="sayout.html" style="font-weight: bold; color: #FFFC33; text-decoration: underline; font-size: 1.1rem;">SAYOUT</a>
+				<a href="#">CONTACT</a>
+				<a href="#">REPORT ISSUES</a>
+			</nav>
 		</div>
-	</body>
+	</header>
+	<form id="postForm">
+		<textarea id="postInput" placeholder="What's on your mind?" maxlength="500"></textarea>
+		<button type="submit">Post</button>
+	</form>
+	
+	<div id="postContainer"></div>
+
+	<div class="footer">
+		<p>© Copyright @PISAY-SAYOUT</p>
+	</div>
+</body>
 </html>
