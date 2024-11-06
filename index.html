@@ -1,118 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-	  <meta charset="UTF-8">
-	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	  <link rel="icon" type="image/x-icon" href="logo.ico">
-	  <title>PISAY SAYOUT</title>
-	  
-	  <link rel="preconnect" href="https://fonts.googleapis.com">
-	  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-	  
-	  <script type="module">
-		import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-		import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, orderBy, query, getDocs, deleteDoc, limit } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="icon" type="image/x-icon" href="logo.ico">
+		<title>PISAY SAYOUT</title>
 
-		const firebaseConfig = {
-		  apiKey: "AIzaSyDemeKsWgQhIxa7fvWm3rf9F5AcOELBdaY",
-		  authDomain: "pisay-sayout.firebaseapp.com",
-		  projectId: "pisay-sayout",
-		  storageBucket: "pisay-sayout.appspot.com",
-		  messagingSenderId: "682766827567",
-		  appId: "1:682766827567:web:f7a51de6fe4865f3a706da",
-		  measurementId: "G-TVRP1413RD"
-		};
-		const app = initializeApp(firebaseConfig);
-		const db = getFirestore(app);
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&display=swap" rel="stylesheet">
 
-		const messageForm = document.getElementById("messageForm");
-		const messageInput = document.getElementById("messageInput");
-		const messageContainer = document.getElementById("messageContainer");
+		<script type="module">
+		  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+		  import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, orderBy, query, getDocs, deleteDoc, limit } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
-		messageForm.addEventListener("submit", async (e) => {
-		  e.preventDefault();
-		  const messageText = messageInput.value.trim(); // Trim whitespace from the input
+		  const firebaseConfig = {
+			apiKey: "AIzaSyDemeKsWgQhIxa7fvWm3rf9F5AcOELBdaY",
+			authDomain: "pisay-sayout.firebaseapp.com",
+			projectId: "pisay-sayout",
+			storageBucket: "pisay-sayout.firebasestorage.app",
+			messagingSenderId: "682766827567",
+			appId: "1:682766827567:web:f7a51de6fe4865f3a706da",
+			measurementId: "G-TVRP1413RD"
+		  };
 
-		  if (!messageText) {
-			alert("Message cannot be empty."); 
-			return; 
-		  }
+		  const app = initializeApp(firebaseConfig);
+		  const db = getFirestore(app);
 
-		  try {
-			await addDoc(collection(db, "messages"), {
-			  text: messageText,
-			  timestamp: serverTimestamp()
-			});
-			messageInput.value = ""; 
+		  const messageForm = document.getElementById("messageForm");
+		  const messageInput = document.getElementById("messageInput");
+		  const messageContainer = document.getElementById("messageContainer");
 
-			const messagesSnapshot = await getDocs(collection(db, "messages"));
-			const messageCount = messagesSnapshot.size;
+		  const lastPostedTime = {}; 
 
-			if (messageCount > 20) {
-			  const oldestMessagesQuery = query(
-				collection(db, "messages"),
-				orderBy("timestamp"),
-				limit(messageCount - 20) 
-			  );
+		  messageForm.addEventListener("submit", async (e) => {
+			e.preventDefault();
+			const messageText = messageInput.value.trim();
+			const currentTime = new Date().getTime();
 
-			  const oldestMessagesSnapshot = await getDocs(oldestMessagesQuery);
-			  oldestMessagesSnapshot.forEach(async (doc) => {
-				await deleteDoc(doc.ref);
-			  });
+			if (!messageText) {
+			  alert("Message cannot be empty.");
+			  return;
 			}
-		  } catch (error) {
-			console.error("Error posting message: ", error);
-		  }
-		});
 
+			if (lastPostedTime[e.target] && currentTime - lastPostedTime[e.target] < 5000) {
+			  alert("Please wait a moment before posting again.");
+			  return;
+			}
+			lastPostedTime[e.target] = currentTime;
 
-		const messagesQuery = query(collection(db, "messages"), orderBy("timestamp", "desc"));
-		onSnapshot(messagesQuery, (snapshot) => {
-		  messageContainer.innerHTML = ""; 
-		  snapshot.forEach((doc) => {
-			const data = doc.data();
-			const message = data.text;
-			const timestamp = data.timestamp ? data.timestamp.toDate().toLocaleString() : "Sending...";
-			
-			const messageDiv = document.createElement("div");
-			messageDiv.innerHTML = `<strong>${message}</strong><br><small>${timestamp}</small>`;
-			messageContainer.appendChild(messageDiv);
+			try {
+			  await addDoc(collection(db, "messages"), {
+				text: messageText,
+				timestamp: serverTimestamp()
+			  });
+			  messageInput.value = "";
+			} catch (error) {
+			  console.error("Error posting message: ", error);
+			}
 		  });
-		});
 
-	  </script>
-	  
-	  <link rel="stylesheet" href="style.css">
-	</head>
-	<body>
-		<header>
-			<div class="title-part">
-				<h1>PISAY SAYOUT</h1>
-				<h2>Beta</h2>
-				<h4>v1.3</h4>
+		  const messagesQuery = query(collection(db, "messages"), orderBy("timestamp", "desc"));
+
+		  onSnapshot(messagesQuery, (snapshot) => {
+			messageContainer.innerHTML = "";
+			snapshot.forEach((doc) => {
+			  const data = doc.data();
+			  const message = data.text;
+			  const timestamp = data.timestamp ? data.timestamp.toDate().toLocaleString() : "Sending...";
+
+			  const messageDiv = document.createElement("div");
+			  messageDiv.innerHTML = `<strong>${message}</strong><br><small>${timestamp}</small>`;
+			  messageContainer.appendChild(messageDiv);
+			});
+		  });
+		  
+		  const deleteOldMessages = async () => {
+			try {
+			  const messagesSnapshot = await getDocs(collection(db, "messages"));
+			  const messageCount = messagesSnapshot.size;
+
+			  if (messageCount > 20) {
+				const oldestMessagesQuery = query(
+				  collection(db, "messages"),
+				  orderBy("timestamp"),
+				  limit(messageCount - 20)
+				);
+
+				const oldestMessagesSnapshot = await getDocs(oldestMessagesQuery);
+				const batch = db.batch();
 				
-				<nav>
-					<a href="index.html" style="font-weight: bold; color: #FFFC33; text-decoration: underline; font-size: 1.1rem;">GLOBAL CHAT</a>
-					<a href="sayout.html">SAYOUT</a>
-					<a href="#">CONTACT</a>
-					<a href="#">REPORT ISSUES</a>
-				</nav>
-		    </div>
-		</header>
-		<h1>🟢LIVE GLOBAL CHAT</h1>
-		<div class="centered-container"z>
-		  <form id="messageForm">
-			<div class="text-area">
-				<textarea id="messageInput" placeholder="Say something..."></textarea>
-				<button class="post-button" type="submit">Post</button>
-			</div>
-		  </form>
-		  <div class="text-messages" id="messageContainer"></div>
-		</div>
-		
-		<div class="footer">
-			<p>© Copyright @PISAY-SAYOUT</p>
-		</div>
-	</body>
+				oldestMessagesSnapshot.forEach((doc) => {
+				  batch.delete(doc.ref);
+				});
+
+				await batch.commit();
+			  }
+			} catch (error) {
+			  console.error("Error deleting old messages: ", error);
+			}
+		  };
+
+		  setInterval(deleteOldMessages, 60000);
+		</script>
+
+		<link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+	<header>
+      <div class="title-part">
+        <h1>PISAY SAYOUT</h1>
+        <h2>Beta</h2>
+        <h4>v1.4</h4>
+
+        <nav>
+          <a href="index.html" style="font-weight: bold; color: #FFFC33; text-decoration: underline; font-size: 1.1rem;">GLOBAL CHAT</a>
+          <a href="sayout.html">SAYOUT</a>
+          <a href="#">CONTACT</a>
+          <a href="#">REPORT ISSUES</a>
+        </nav>
+      </div>
+    </header>
+    <h1>🟢LIVE GLOBAL CHAT</h1>
+    <div class="centered-container">
+      <form id="messageForm">
+        <div class="text-area">
+          <textarea id="messageInput" placeholder="Say something..."></textarea>
+          <button class="post-button" type="submit">Post</button>
+        </div>
+      </form>
+      <div class="text-messages" id="messageContainer"></div>
+    </div>
+    
+    <div class="footer">
+      <p>© Copyright @PISAY-SAYOUT</p>
+    </div>
+  </body>
 </html>
