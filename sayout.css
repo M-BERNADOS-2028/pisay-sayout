@@ -4,7 +4,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Dancing Script, sans-serif;
+    font-family: Poppins, sans-serif;
 }
 
 
@@ -23,6 +23,7 @@ header {
   color: white;
   margin-bottom: 3vh;
   width: 100%; 
+  padding: 1rem;
 }
 
 nav a {
@@ -128,16 +129,15 @@ button:hover {
 }
 
 .post {
-
   background-color: #ffffff;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  flex: 1 1 200px; /
-  min-width: 200px; 
+  flex: 1 1 200px; 
   max-width: calc(100% - 15px);
   word-wrap: break-word; 
   overflow-wrap: break-word; 
+  font-family: Poppins, sans-serif;
 }
 
 .post p {
@@ -171,4 +171,3 @@ button:hover {
 .like-button:hover {
     background-color: #6A1B9A;
 }
-

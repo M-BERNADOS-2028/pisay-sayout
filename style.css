@@ -10,11 +10,11 @@ body {
 }
 
 header {
-	font-family: Pacifico, sans-serif;
-	color: white;
-	background-color: rgba(9, 9, 10, 0.9);
-	margin-bottom: 3vh;
-	width: 100%;
+		font-family: Pacifico, sans-serif;
+		color: white;
+		background-color: rgba(9, 9, 10, 0.9);
+		margin-bottom: 3vh;
+		width: 100%;
 }
 
 nav a {
@@ -54,7 +54,7 @@ nav a:hover {
 
 .text-messages {
 	display: flex;
-	font-family: Dancing Script, sans-serif;
+	font-family: Poppins, sans-serif;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
@@ -86,7 +86,7 @@ nav a:hover {
 h1
 {
 	color:white;
-	font-family: Pattaya, sans-serif;
+	font-family: Poppins, sans-serif;
 }
 
 h1, h2, h4 {
