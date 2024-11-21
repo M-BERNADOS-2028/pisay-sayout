@@ -1,3 +1,7 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lilita+One&family=Pacifico&family=Pattaya&family=Rubik+Wet+Paint&display=swap');
+
+
 body {
 	background-image: url("background.jpg");
 	font-family: Poppins, sans-serif;
@@ -6,20 +10,22 @@ body {
 }
 
 header {
-	background-color: rgba(114, 30, 151, 0.3);
+	font-family: Pacifico, sans-serif;
+	color: white;
+	background-color: rgba(9, 9, 10, 0.9);
 	margin-bottom: 3vh;
 	width: 100%;
 }
 
 nav a {
 	text-decoration: none;
-	color: black;
+	color: white;
 	margin-left: 10vw;
 	transition: text-decoration 0.3s ease, font-size 0.3s ease;
 }
 
 nav a:hover {
-	color: #FFFC33;
+	color: #c63ce8;
 	font-weight: bold;
 	text-decoration: underline;
 	font-size: 1.1rem;
@@ -48,6 +54,7 @@ nav a:hover {
 
 .text-messages {
 	display: flex;
+	font-family: Dancing Script, sans-serif;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
@@ -55,12 +62,14 @@ nav a:hover {
 
 .title-part {
 	margin-left: 2vw;
+	color: #ed1a2f;
 	display: flex;
 	align-items: center;
 }
 
 .post-button {
-	background-color: #4A148C;
+	font-family: Pacifico, sans-serif;
+	background-color: #9a1fa3;
 	color: #fff;
 	padding: 10px 20px;
 	border: none;
@@ -71,7 +80,13 @@ nav a:hover {
 }
 
 .post-button:hover {
-	background-color: #6A1B9A;
+	background-color: #ac28b5;
+}
+
+h1
+{
+	color:white;
+	font-family: Pattaya, sans-serif;
 }
 
 h1, h2, h4 {
@@ -81,7 +96,7 @@ h1, h2, h4 {
 }
 
 h2, h4 {
-	color: green;
+	color: red;
 }
 
 h2 {

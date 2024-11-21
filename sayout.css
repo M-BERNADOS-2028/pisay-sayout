@@ -1,6 +1,15 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lilita+One&family=Pacifico&family=Pattaya&family=Rubik+Wet+Paint&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Dancing Script, sans-serif;
+}
+
+
 body {
   background-image: url("background.jpg");
-  font-family: Poppins, sans-serif;
   padding: 0;
   margin: 0;
   display: flex; 
@@ -10,26 +19,29 @@ body {
 }
 
 header {
-  background-color: rgba(114, 30, 151, 0.3);
+  background-color: rgba(9, 9, 10, 0.9);
+  color: white;
   margin-bottom: 3vh;
   width: 100%; 
 }
 
 nav a {
+  font-family: Pacifico, sans-serif;
   text-decoration: none;
-  color: black;
+  color: white;
   margin-left: 10vw;
   transition: text-decoration 0.3s ease, font-size 0.3s ease;
 }
 
 nav a:hover {
-  color: #FFFC33;
+  color: #c63ce8;
   font-weight: bold;
   text-decoration: underline;
   font-size: 1.1rem;
 }
 
 .footer {
+	
   font-weight: bold;
   text-decoration: underline;
   padding: 1vh 0;
@@ -39,14 +51,22 @@ nav a:hover {
   text-align: center;
 }
 
+h1
+{
+	font-family: Pattaya, sans-serif;
+}
+
+
 h1, h2, h4 {
+	
+  display: flex;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 h2, h4 {
-  color: green;
+  color: red;
 }
 
 h2 {
@@ -84,7 +104,8 @@ textarea {
 }
 
 button {
-  background-color: #4A148C;
+  font-family: Pacifico, sans-serif;
+  background-color: #9a1fa3;
   color: #fff;
   padding: 10px 20px;
   border: none;
@@ -94,7 +115,7 @@ button {
 }
 
 button:hover {
-  background-color: #6A1B9A;
+  background-color: #ac28b5;
 }
 
 #postContainer {
@@ -107,13 +128,14 @@ button:hover {
 }
 
 .post {
+
   background-color: #ffffff;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   flex: 1 1 200px; /
   min-width: 200px; 
-  max-width: calc(100% - 15px); /* PISTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE */
+  max-width: calc(100% - 15px);
   word-wrap: break-word; 
   overflow-wrap: break-word; 
 }
