@@ -33,6 +33,7 @@
 		async function submitPost(event) {
 			event.preventDefault();
 			const postContent = document.getElementById("postInput").value.trim();
+			const postButton = event.target.querySelector("button"); // Get the submit button
 			const currentTime = Date.now();
 
 			if (currentTime - lastPostTime < 60000) {
@@ -54,6 +55,7 @@
 				return;
 			}
 
+			postButton.disabled = true; 
 			try {
 				await addDoc(pendingPostsRef, {
 					text: postContent,
@@ -61,12 +63,16 @@
 					status: "pending"
 				});
 				document.getElementById("postInput").value = "";
-				lastPostTime = currentTime; 
+				lastPostTime = currentTime;
 				alert("Your post has been submitted for admin approval. It will appear publicly once reviewed.");
 			} catch (error) {
 				console.error("Error submitting post: ", error);
+				alert("Failed to submit the post. Please try again.");
+			} finally {
+				postButton.disabled = false; 
 			}
 		}
+
 
 		async function loadVerifiedPosts() {
 			const postContainer = document.getElementById("postContainer");
@@ -93,6 +99,13 @@
 			loadVerifiedPosts();
 			document.getElementById("postForm").addEventListener("submit", submitPost);
 		});
+		
+		
+		document.querySelector('a[href="#"]').addEventListener('click', (event) => {
+			event.preventDefault();
+			alert("Feature still coming soon!");
+		});
+
 	</script>
 
 	<link rel="stylesheet" href="sayout.css">
