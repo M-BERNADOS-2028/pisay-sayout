@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="logo.ico">
+    <link rel="icon" type="image/x-icon" href="icon.ico">
     <title>PISAY SAYOUT</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,31 +34,38 @@
       const lastPostedTime = {}; 
 
       messageForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const messageText = messageInput.value.trim();
-        const currentTime = new Date().getTime();
+	  e.preventDefault();
+	  const messageText = messageInput.value.trim();
+	  const postButton = messageForm.querySelector("button");
+	  const currentTime = new Date().getTime();
 
-        if (!messageText) {
-          alert("Message cannot be empty.");
-          return;
-        }
+	  if (!messageText) {
+		alert("Message cannot be empty.");
+		return;
+	  }
 
-        if (lastPostedTime[e.target] && currentTime - lastPostedTime[e.target] < 5000) {
-          alert("Please wait a moment before posting again.");
-          return;
-        }
-        lastPostedTime[e.target] = currentTime;
+	  if (lastPostedTime[e.target] && currentTime - lastPostedTime[e.target] < 5000) {
+		alert("Please wait a moment before posting again.");
+		return;
+	  }
+	  lastPostedTime[e.target] = currentTime;
 
-        try {
-          await addDoc(collection(db, "messages"), {
-            text: messageText,
-            timestamp: serverTimestamp()
-          });
-          messageInput.value = "";
-        } catch (error) {
-          console.error("Error posting message: ", error);
-        }
-      });
+	  postButton.disabled = true;
+
+	  try {
+		await addDoc(collection(db, "messages"), {
+		  text: messageText,
+		  timestamp: serverTimestamp()
+		});
+		messageInput.value = "";
+	  } catch (error) {
+		console.error("Error posting message: ", error);
+		alert("Failed to post the message. Please try again.");
+	  } finally {
+		postButton.disabled = false;
+	  }
+	});
+
 
       const messagesQuery = query(collection(db, "messages"), orderBy("timestamp", "desc"));
 
@@ -102,6 +109,11 @@
       };
 
       setInterval(deleteOldMessages, 60000);
+	  
+	  document.querySelector('a[href="#"]').addEventListener('click', (event) => {
+			event.preventDefault();
+			alert("Feature still coming soon!");
+		});
     </script>
 
     <link rel="stylesheet" href="style.css">
@@ -119,7 +131,7 @@
         </nav>
       </div>
     </header>
-    <h1>🔴 LIVE GLOBAL CHAT 🔴</h1>
+    <h1>🔴 LIVE GLOBAL CHAT</h1>
     <div class="centered-container">
       <form id="messageForm">
         <div class="text-area">
