@@ -105,6 +105,18 @@
 			event.preventDefault();
 			alert("Feature still coming soon!");
 		});
+		
+		document.addEventListener("DOMContentLoaded", () => {
+			const navWrapper = document.querySelector(".nav-wrapper");
+
+			navWrapper.addEventListener("wheel", (event) => {
+				if (event.deltaY !== 0) {
+					event.preventDefault();
+					navWrapper.scrollLeft += event.deltaY; 
+				}
+			});
+		});
+		;
 
 	</script>
 
@@ -114,15 +126,17 @@
 	<header>
 		<div class="title-part">
 			<h1 class="title-main">PISAY SAYOUT</h1>
-
-			<nav>
-				<a href="index.html">CHAT</a>
-				<a href="sayout.html" style="font-weight: bold; color: #c63ce8; text-decoration: underline; font-size: 1.1rem;">•SAYOUT</a>
-				<a href="#">CONTACT</a>
-				<a href="report.html">REPORT</a>
-			</nav>
+			<div class="nav-wrapper">
+				<nav>
+					<a href="index.html">CHAT</a>
+					<a href="sayout.html" style="font-weight: bold; color: #c63ce8; text-decoration: underline; font-size: 1.1rem;">•SAYOUT</a>
+					<a href="#">CONTACT</a>
+					<a href="report.html">REPORT</a>
+				</nav>
+			</div>
 		</div>
 	</header>
+	
 	<form id="postForm">
 		<textarea id="postInput" placeholder="What's on your mind?" maxlength="500"></textarea>
 		<button type="submit">Post</button>

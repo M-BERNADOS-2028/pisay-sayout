@@ -1,4 +1,3 @@
-
 /* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lilita+One&family=Pacifico&family=Pattaya&family=Rubik+Wet+Paint&display=swap');
 
@@ -31,7 +30,7 @@ header {
     box-sizing: border-box;
 }
 
-/* Navigation */
+/* Navigation Link Styles */
 nav {
     display: flex;
     justify-content: center;
@@ -53,16 +52,18 @@ nav a:hover {
     font-size: 1.1rem;
 }
 
+
 /* Title and Form Layout */
 .title-main {
     color: white;
     font-family: Poppins, sans-serif;
+	margin-bottom: 1.5rem;
+	margin-top: 1.3;
 }
 
 .title-report {
     font-family: 'Poppins', sans-serif;
     text-align: center;
-    margin-top: 3rem; 
     margin-bottom: 1.5rem; 
     font-size: 2.5rem;
     color: #c63ce8; 
@@ -117,7 +118,7 @@ button:hover {
     text-decoration: underline;
     padding: 2vh 0;
     margin-top: 2vh;
-    margin-bottom: 4vh;
+    margin-bottom: 1vh;
     width: 100%;
     background-color: rgba(114, 30, 151, 0);
     color: black;
@@ -125,7 +126,7 @@ button:hover {
 }
 
 /* Mobile Responsive Adjustments */
-@media (max-width: 700px) {
+@media (max-width: 680px) {
     header {
         padding: 0.8rem; 
     }
@@ -133,6 +134,55 @@ button:hover {
     nav {
         gap: 1rem;
     }
+	
+	/* Navigation Wrapper */
+	.nav-wrapper {
+		margin: 0 auto;
+		width: 100%; /* Make the nav-wrapper full width */
+		overflow-x: auto; 
+		white-space: nowrap; 
+		display: flex; 
+		padding: 0.5rem 0; 
+		scrollbar-width: thin; 
+	}
+
+	/* Webkit Browsers */
+	.nav-wrapper::-webkit-scrollbar {
+		height: 8px; 
+	}
+
+	.nav-wrapper::-webkit-scrollbar-thumb {
+		background: #c63ce8; 
+		border-radius: 10px; 
+	}
+
+	.nav-wrapper::-webkit-scrollbar-track {
+		background: #f0f0f0; 
+	}
+
+	/* Navigation Links */
+	nav {
+		display: flex; 
+		gap: 2rem; 
+		flex-wrap: nowrap; 
+		padding: 0.5rem; 
+	}
+
+	nav a {
+		font-family: 'Pacifico', sans-serif;
+		text-decoration: none;
+		color: white;
+		padding: 0.5rem 1rem;
+		font-size: 1rem;
+		transition: text-decoration 0.3s ease, font-size 0.3s ease;
+	}
+
+	nav a:hover {
+		color: #c63ce8;
+		font-weight: bold;
+		text-decoration: underline;
+		font-size: 1.1rem;
+	}
 
     .title-main {
         font-size: 2rem;

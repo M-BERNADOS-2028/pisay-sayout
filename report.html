@@ -76,6 +76,19 @@
 			event.preventDefault();
 			alert("Feature still coming soon!");
 		});
+		
+		document.addEventListener("DOMContentLoaded", () => {
+			const navWrapper = document.querySelector(".nav-wrapper");
+
+			navWrapper.addEventListener("wheel", (event) => {
+				if (event.deltaY !== 0) {
+					event.preventDefault();
+					navWrapper.scrollLeft += event.deltaY; 
+				}
+			});
+		});
+		;
+
 	</script>
 
 	<link rel="stylesheet" href="report.css">
@@ -84,12 +97,14 @@
 	<header>
 		<div class="title-part">
 			<h1 class="title-main">PISAY SAYOUT</h1>
-			<nav>
-				<a href="index.html">CHAT</a>
-				<a href="sayout.html">SAYOUT</a>
-				<a href="#">CONTACT</a>
-				<a href="report.html" style="font-weight: bold; color: #c63ce8; text-decoration: underline; font-size: 1.1rem;">•REPORT</a>
-			</nav>
+			<div class="nav-wrapper">
+				<nav>
+					<a href="index.html">CHAT</a>
+					<a href="sayout.html">SAYOUT</a>
+					<a href="#">CONTACT</a>
+					<a href="report.html" style="font-weight: bold; color: #c63ce8; text-decoration: underline; font-size: 1.1rem;">•REPORT</a>
+				</nav>
+			</div>
 		</div>
 	</header>
 
