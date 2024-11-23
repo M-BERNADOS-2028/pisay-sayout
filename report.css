@@ -1,0 +1,148 @@
+
+/* Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lilita+One&family=Pacifico&family=Pattaya&family=Rubik+Wet+Paint&display=swap');
+
+/* Global Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-image: url("background.jpg");
+    padding: 0;
+    margin: 0;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    min-height: 100vh; 
+}
+
+/* Header Styles */
+header {
+    background-color: rgba(9, 9, 10, 0.9);
+    color: white;
+    margin-bottom: 3vh;
+    width: 100%; 
+    padding: 1rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Navigation */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 7rem;
+    flex-wrap: wrap;
+}
+
+nav a {
+    font-family: 'Pacifico', sans-serif;
+    text-decoration: none;
+    color: white;
+    transition: text-decoration 0.3s ease, font-size 0.3s ease;
+}
+
+nav a:hover {
+    color: #c63ce8;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1.1rem;
+}
+
+/* Title and Form Layout */
+.title-main {
+    color: white;
+    font-family: Poppins, sans-serif;
+}
+
+.title-report {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin-top: 3rem; 
+    margin-bottom: 1.5rem; 
+    font-size: 2.5rem;
+    color: #c63ce8; 
+}
+
+p {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-width: 500px;
+}
+
+textarea,
+input[type="url"] {
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #c63ce8;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #a22ac2;
+}
+
+/* Footer Styles */
+.footer {
+    font-weight: bold;
+    text-decoration: underline;
+    padding: 2vh 0;
+    margin-top: 2vh;
+    margin-bottom: 4vh;
+    width: 100%;
+    background-color: rgba(114, 30, 151, 0);
+    color: black;
+    text-align: center;
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 700px) {
+    header {
+        padding: 0.8rem; 
+    }
+
+    nav {
+        gap: 1rem;
+    }
+
+    .title-main {
+        font-size: 2rem;
+    }
+
+    .title-report {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+}
