@@ -100,24 +100,27 @@
 			document.getElementById("postForm").addEventListener("submit", submitPost);
 		});
 		
-		
-		document.querySelector('a[href="#"]').addEventListener('click', (event) => {
-			event.preventDefault();
-			alert("Feature still coming soon!");
-		});
-		
 		document.addEventListener("DOMContentLoaded", () => {
+			function showComingSoon(event) {
+				event.preventDefault();
+				alert("This feature is currently under development and will be available soon. Stay tuned for updates!");
+			}
+			const unsentProjectLink = document.querySelector('nav a[href="#"]:nth-child(3)');
+			const contactLink = document.querySelector('nav a[href="#"]:nth-child(4)');
+
+			if (unsentProjectLink) unsentProjectLink.addEventListener("click", showComingSoon);
+			if (contactLink) contactLink.addEventListener("click", showComingSoon);
+
 			const navWrapper = document.querySelector(".nav-wrapper");
-
-			navWrapper.addEventListener("wheel", (event) => {
-				if (event.deltaY !== 0) {
-					event.preventDefault();
-					navWrapper.scrollLeft += event.deltaY; 
-				}
-			});
+			if (navWrapper) {
+				navWrapper.addEventListener("wheel", (event) => {
+					if (event.deltaY !== 0) {
+						event.preventDefault();
+						navWrapper.scrollLeft += event.deltaY;
+					}
+				});
+			}
 		});
-		;
-
 	</script>
 
 	<link rel="stylesheet" href="sayout.css">
@@ -130,6 +133,7 @@
 				<nav>
 					<a href="index.html">CHAT</a>
 					<a href="sayout.html" style="font-weight: bold; color: #c63ce8; text-decoration: underline; font-size: 1.1rem;">•SAYOUT</a>
+					<a href="#">UNSENT PROJECT</a>
 					<a href="#">CONTACT</a>
 					<a href="report.html">REPORT</a>
 				</nav>
