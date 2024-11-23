@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="icon.ico">
+	<title>PISAY SAYOUT - Report Issues</title>
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+	
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+		import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyDemeKsWgQhIxa7fvWm3rf9F5AcOELBdaY",
+			authDomain: "pisay-sayout.firebaseapp.com",
+			projectId: "pisay-sayout",
+			storageBucket: "pisay-sayout.appspot.com",
+			messagingSenderId: "682766827567",
+			appId: "1:682766827567:web:f7a51de6fe4865f3a706da",
+			measurementId: "G-TVRP1413RD"
+		};
+
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
+		const bugReportsRef = collection(db, "BugReports");
+
+		async function submitBugReport(event) {
+			event.preventDefault();
+			const description = document.getElementById("description").value.trim();
+			const stepsToReproduce = document.getElementById("stepsToReproduce").value.trim();
+			const screenshotUrl = document.getElementById("screenshotUrl").value.trim();
+			const submitButton = document.querySelector("button[type='submit']");
+
+			if (!description) {
+				alert("Description is required.");
+				return;
+			}
+
+			submitButton.disabled = true;
+			submitButton.textContent = "Submitting...";
+
+			try {
+				await addDoc(bugReportsRef, {
+					description,
+					stepsToReproduce,
+					screenshotUrl: screenshotUrl || null,
+					status: "pending",
+					timestamp: serverTimestamp()
+				});
+				alert("Bug report submitted successfully!");
+				document.getElementById("reportForm").reset();
+			} catch (error) {
+				console.error("Error submitting bug report:", error);
+				let errorMessage = "An unexpected error occurred. Please try again later.";
+				if (error.code === "permission-denied") {
+					errorMessage = "You do not have permission to perform this action.";
+				} else if (error.code === "network-request-failed") {
+					errorMessage = "Network error. Please check your connection.";
+				}
+				alert(errorMessage);
+			} finally {
+				submitButton.disabled = false;
+				submitButton.textContent = "Submit Report";
+			}
+		}
+
+		document.addEventListener("DOMContentLoaded", () => {
+			document.getElementById("reportForm").addEventListener("submit", submitBugReport);
+		});
+		
+		document.querySelector('a[href="#"]').addEventListener('click', (event) => {
+			event.preventDefault();
+			alert("Feature still coming soon!");
+		});
+	</script>
+
+	<link rel="stylesheet" href="report.css">
+</head>
+<body>
+	<header>
+		<div class="title-part">
+			<h1 class="title-main">PISAY SAYOUT</h1>
+			<nav>
+				<a href="index.html">CHAT</a>
+				<a href="sayout.html">SAYOUT</a>
+				<a href="#">CONTACT</a>
+				<a href="report.html" style="font-weight: bold; color: #c63ce8; text-decoration: underline; font-size: 1.1rem;">•REPORT</a>
+			</nav>
+		</div>
+	</header>
+
+	<h1 class="title-report">Report an Issue</h1> 
+	<p>Please fill out the form below to report any bugs or issues with the platform. Your feedback helps us improve!</p>
+
+	<form id="reportForm">
+		<label for="description">Description:</label>
+		<textarea id="description" placeholder="Describe the issue..." required></textarea>
+
+		<label for="stepsToReproduce">Steps to Reproduce:</label>
+		<textarea id="stepsToReproduce" placeholder="How can we replicate the bug?"></textarea>
+
+		<label for="screenshotUrl">Screenshot URL (optional):</label>
+		<input type="url" id="screenshotUrl" placeholder="Paste the link to your screenshot">
+
+		<button type="submit">Submit Report</button>
+	</form>
+	
+	<div class="footer">
+		<p class="footer">© Copyright @PISAY-SAYOUT</p>
+	</div>
+</body>
+</html>

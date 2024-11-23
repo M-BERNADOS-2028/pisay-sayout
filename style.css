@@ -1,182 +1,198 @@
-
+/* Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Lilita+One&family=Pacifico&family=Pattaya&family=Rubik+Wet+Paint&display=swap');
 
-
+/* Global Styles */
 body {
-	background-image: url("background.jpg");
-	font-family: Poppins, sans-serif;
-	padding: 0;
-	margin: 0;
+    background-image: url("background.jpg");
+    font-family: Poppins, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
+/* Header Section */
 header {
-	background-color: rgba(9, 9, 10, 0.9);
-	color: white;
-	margin-bottom: 3vh;
-	width: 100%; 
-	padding: 1rem;
+    background-color: rgba(9, 9, 10, 0.9);
+    color: white;
+    margin-bottom: 3vh;
+    width: 100%; 
+    padding: 1rem;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Navigation Section */
+nav {
+    display: flex;
+    justify-content: center;
+    gap: 7rem;
+    flex-wrap: wrap;
 }
 
 nav a {
-	font-family: Pacifico, sans-serif;
-	text-decoration: none;
-	color: white;
-	margin-left: 10vw;
-	transition: text-decoration 0.3s ease, font-size 0.3s ease;
+    font-family: 'Pacifico', sans-serif;
+    text-decoration: none;
+    color: white;
+    transition: text-decoration 0.3s ease, font-size 0.3s ease;
 }
 
 nav a:hover {
-	color: #c63ce8;
-	font-weight: bold;
-	text-decoration: underline;
-	font-size: 1.1rem;
+    color: #c63ce8;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 1.1rem;
 }
 
+/* Header Text Styles */
+.title-main {
+    color: white;
+    font-family: Poppins, sans-serif;
+}
+
+.title-report {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    margin-top: 3rem; 
+    margin-bottom: 1.5rem; 
+    font-size: 2.5rem;
+    color: #c63ce8; 
+}
+
+/* Footer Section */
 .footer {
-	font-weight: bold;
-	text-decoration: underline;
-	padding: 1vh 0;
-	width: 100%;
-	background-color: rgba(114, 30, 151, 0);
-	color: black;
-	text-align: center;
+    font-weight: bold; /* Emphasize text */
+    text-decoration: underline;
+    padding: 2vh 0; /* Vertical spacing */
+    margin-top: 2vh; 
+    margin-bottom: 4vh; 
+    width: 100%; 
+    background-color: rgba(114, 30, 151, 0); /* Transparent background */
+    color: black;
+    text-align: center;
 }
 
+/* Centered Containers */
 .centered-container {
-	align-items: center;
-	width: 100%;
+    align-items: center; /* Center content vertically */
+    width: 100%;
 }
 
+/* Text Area Section */
 .text-area {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* Text Message Styles */
 .text-messages {
-	display: flex;
-	font-family: Poppins, sans-serif;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
+    display: flex;
+    font-family: Poppins, sans-serif;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 }
 
-.title-part {
-	margin-left: 2vw;
-	color: #ed1a2f;
-	display: flex;
-	align-items: center;
-}
-
+/* Button Styling */
 .post-button {
-	font-family: Pacifico, sans-serif;
-	background-color: #9a1fa3;
-	color: #fff;
-	padding: 10px 20px;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-	font-size: 1rem;
-	margin-left: 20px;
+    font-family: Pacifico, sans-serif;
+    background-color: #9a1fa3; /* Purple base */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px; /* Rounded edges */
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 20px;
 }
 
 .post-button:hover {
-	background-color: #ac28b5;
+    background-color: #ac28b5; /* Darker hover shade */
 }
 
 .post-button:disabled {
-	background-color: #a8a8a8; 
-	color: #d3d3d3;
-	cursor: not-allowed;
-	opacity: 0.6;
+    background-color: #a8a8a8; 
+    color: #d3d3d3;
+    cursor: not-allowed;
+    opacity: 0.6;
 }
 
-h1 {
-	color:white;
-	font-family: Poppins, sans-serif;
-}
-
-h1, h2, h4 {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-h2, h4 {
-	color: red;
-}
-
-h2 {
-	margin-left: 1vw;
-}
-
-h4 {
-	margin-left: 0.5vw;
-}
-
+/* Message Form Section */
 #messageForm {
-	margin-bottom: 2vh;
+    margin-bottom: 2vh;
 }
 
+/* Textarea Styling */
 textarea {
-	border: 1px solid #ddd;
-	border-radius: 1vh;
-	width: 50%;
-	height: 150px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+    border: 1px solid #ddd; 
+    border-radius: 1vh; 
+    width: 50%;
+    height: 150px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* Message Container Section */
 #messageContainer {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	width: 100%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    width: 100%;
 }
 
 #messageContainer div {
-	padding: 1vh;
-	border: 1px solid #ddd;
-	border-radius: 2vh;
-	margin-top: 2vh;
-	width: 80%;
-	font-size: 1.1rem;
-	max-width: 80vw; 
-	background-color: #f9f9f9;
-	transition: background-color 0.3s, transform 0.3s ease;
-	word-wrap: break-word; 
-	display: inline-block; 
-	box-sizing: border-box;
+    padding: 1vh; 
+    border: 1px solid #ddd;
+    border-radius: 2vh;
+    margin-top: 2vh; 
+    width: 80%; 
+    font-size: 1.1rem;
+    max-width: 80vw; 
+    background-color: #f9f9f9; 
+    transition: background-color 0.3s, transform 0.3s ease; 
+    word-wrap: break-word; 
+    display: inline-block; 
+    box-sizing: border-box;
 }
 
 #messageContainer div:hover {
-	transform: scale(1.05);
-	background-color: yellow;
+    transform: scale(1.05); 
+    background-color: yellow;
 }
 
-
-/* Allowing Layout to be flexible in android/phone screens */
-@media (max-width: 500px){
-	.text-area {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
+/* Mobile Responsive Adjustments */
+@media (max-width: 500px) {
+    .text-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    textarea {
+        width: 90%; 
+        height: 150px;
+        margin: 10px 0;
+    }
+    
+    .post-button {
+        font-size: 1.2rem;
+        width: 100px;
+    }
+    
+    #messageContainer div {
+        width: 80%;
+        font-size: 1.1rem;
+    }
 	
-	textarea {
-		width: 90%;
-		height: 150px;
-		margin: 10px 0;
-	}
+	nav {
+        gap: 1rem;
+    }
 	
-	.post-button {
-		font-size: 1.2rem;
-		width: 100px;
-	}
+	.title-main {
+        font-size: 2rem;
+    }
 	
-	#messageContainer div {
-		width: 80%;
-		font-size: 1.1rem;
-	}
+	.title-report {
+        font-size: 2rem;
+    }
 }
