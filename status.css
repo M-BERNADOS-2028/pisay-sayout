@@ -9,13 +9,14 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* Body Styles */
 body {
     background-image: url("background.jpg");
     padding: 0;
     margin: 0;
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh; 
 }
 
@@ -30,7 +31,7 @@ header {
     box-sizing: border-box;
 }
 
-/* Navigation Link Styles */
+/* Navigation Styles */
 nav {
     display: flex;
     justify-content: center;
@@ -52,8 +53,24 @@ nav a:hover {
     font-size: 1.1rem;
 }
 
+/* Footer Styles */
+.footer {
+    font-weight: bold;
+    text-decoration: underline;
+    padding: 2vh 0;
+    margin-top: 2vh;
+    margin-bottom: 4vh;
+    width: 100%;
+    background-color: rgba(114, 30, 151, 0);
+    color: black;
+    text-align: center;
+}
 
-/* Title and Form Layout */
+/* Main Content Styles */
+main {
+    padding: 20px;
+}
+
 .title-main {
     color: white;
     font-family: Poppins, sans-serif;
@@ -69,32 +86,12 @@ nav a:hover {
     color: #c63ce8; 
 }
 
-p {
-    text-align: center;
-    margin-bottom: 2rem;
+section#systemStatus p {
     font-size: 1.2rem;
-    color: #555;
+    margin: 10px 0;
 }
 
-/* Form Styles */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 90%;
-    max-width: 500px;
-}
-
-textarea,
-input[type="url"] {
-    width: 100%;
-    margin: 0.5rem 0;
-    padding: 0.8rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-}
-
+/* Button Styles */
 button {
     margin-top: 1rem;
     padding: 0.8rem 1.5rem;
@@ -112,75 +109,45 @@ button:hover {
     background-color: #a22ac2;
 }
 
-/* Footer Styles */
-.footer {
-    font-weight: bold;
-    text-decoration: underline;
-    padding: 2vh 0;
-    margin-top: 2vh;
-    margin-bottom: 1vh;
-    width: 100%;
-    background-color: rgba(114, 30, 151, 0);
-    color: black;
-    text-align: center;
-}
-
 /* Mobile Responsive Adjustments */
 @media (max-width: 680px) {
     header {
         padding: 0.8rem; 
     }
 
-    nav {
-        gap: 1rem;
+    .nav-wrapper {
+        margin: 0 auto;
+        width: 100%; 
+        overflow-x: auto; 
+        white-space: nowrap; 
+        display: flex; 
+        padding: 0.5rem 0; 
+        scrollbar-width: thin; 
     }
-	
-	.nav-wrapper {
-		margin: 0 auto;
-		width: 100%; 
-		overflow-x: auto; 
-		white-space: nowrap; 
-		display: flex; 
-		padding: 0.5rem 0; 
-		scrollbar-width: thin; 
-	}
-	
-	.nav-wrapper::-webkit-scrollbar {
-		height: 8px; 
-	}
 
-	.nav-wrapper::-webkit-scrollbar-thumb {
-		background: #c63ce8; 
-		border-radius: 10px; 
-	}
+    .nav-wrapper::-webkit-scrollbar {
+        height: 8px; 
+    }
 
-	.nav-wrapper::-webkit-scrollbar-track {
-		background: #f0f0f0; 
-	}
+    .nav-wrapper::-webkit-scrollbar-thumb {
+        background: #c63ce8; 
+        border-radius: 10px; 
+    }
 
-	/* Navigation Links */
-	nav {
-		display: flex; 
-		gap: 2rem; 
-		flex-wrap: nowrap; 
-		padding: 0.5rem; 
-	}
+    .nav-wrapper::-webkit-scrollbar-track {
+        background: #f0f0f0; 
+    }
 
-	nav a {
-		font-family: 'Pacifico', sans-serif;
-		text-decoration: none;
-		color: white;
-		padding: 0.5rem 1rem;
-		font-size: 1rem;
-		transition: text-decoration 0.3s ease, font-size 0.3s ease;
-	}
+    nav {
+        gap: 2rem; 
+        flex-wrap: nowrap; 
+        padding: 0.5rem; 
+    }
 
-	nav a:hover {
-		color: #c63ce8;
-		font-weight: bold;
-		text-decoration: underline;
-		font-size: 1.1rem;
-	}
+    nav a {
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+    }
 
     .title-main {
         font-size: 2rem;
@@ -188,9 +155,5 @@ button:hover {
 
     .title-report {
         font-size: 2rem;
-    }
-
-    p {
-        font-size: 1rem;
     }
 }

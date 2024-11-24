@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="icon.ico">
+	<title>PISAY SAYOUT - Status</title>
+	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="status.css">
+
+	<script type="module">
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+		import { getFirestore, collection, getDocs, limit, query } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyDemeKsWgQhIxa7fvWm3rf9F5AcOELBdaY",
+			authDomain: "pisay-sayout.firebaseapp.com",
+			projectId: "pisay-sayout",
+			storageBucket: "pisay-sayout.appspot.com",
+			messagingSenderId: "682766827567",
+			appId: "1:682766827567:web:f7a51de6fe4865f3a706da",
+			measurementId: "G-TVRP1413RD"
+		};
+
+		let app, db;
+
+		try {
+			app = initializeApp(firebaseConfig);
+			db = getFirestore(app);
+		} catch (initError) {
+			console.error("Firebase initialization error:", initError);
+			document.addEventListener("DOMContentLoaded", () => {
+				document.getElementById("systemStatus").innerHTML = `
+					<p style="color: red;">Failed to initialize Firebase. Check your configuration.</p>
+				`;
+			});
+		}
+
+		async function checkSystemStatus() {
+			const systemStatus = document.getElementById("systemStatus");
+			const overallStatus = document.getElementById("overallStatus");
+			const systems = [
+				{ name: "Messages", collection: "messages" },
+				{ name: "Verified Posts", collection: "VerifiedPosts" },
+				{ name: "Pending Posts", collection: "PendingPosts" },
+				{ name: "Bug Reports", collection: "BugReports" }
+			];
+
+			systemStatus.innerHTML = "<p>Checking systems...</p>";
+			overallStatus.textContent = "Checking overall system status...";
+
+			let resultsHTML = "";
+			let operationalSystems = 0;
+			let issues = 0;
+
+			for (const system of systems) {
+				try {
+					const systemQuery = query(collection(db, system.collection), limit(1));
+					const snapshot = await getDocs(systemQuery);
+
+					if (!snapshot.empty) {
+						resultsHTML += `<p>${system.name}: <span style="color: green;">Operational</span></p>`;
+						operationalSystems++;
+					} else {
+						resultsHTML += `<p>${system.name}: <span style="color: orange;">Operational (No Data)</span></p>`;
+						operationalSystems++;
+					}
+				} catch (error) {
+					let errorMessage = "Error accessing system.";
+					if (error.code === "permission-denied") {
+						errorMessage = "Permission Denied.";
+					} else if (error.code === "unavailable") {
+						errorMessage = "Network Error.";
+					}
+					console.error(`Error checking ${system.name}:`, error);
+					resultsHTML += `<p>${system.name}: <span style="color: red;">${errorMessage}</span></p>`;
+					issues++;
+				}
+			}
+
+			const totalSystems = systems.length;
+
+			let overallText = "All systems are operational.";
+			if (issues > 0) {
+				overallText = issues === totalSystems
+					? "All systems are down or under maintenance."
+					: `${issues} system(s) are down or under maintenance.`;
+			}
+
+			systemStatus.innerHTML = resultsHTML;
+			overallStatus.innerHTML = `<strong>${overallText}</strong>`;
+		}
+
+		document.addEventListener("DOMContentLoaded", () => {
+		  if (db) {
+			checkSystemStatus();
+		  }
+
+		  function showComingSoon(event) {
+			event.preventDefault();
+			alert("This feature is currently under development and will be available soon. Stay tuned for updates!");
+		  }
+
+		  const unsentProjectLink = document.querySelector('nav a[href="#"]:nth-child(3)');
+		  const contactLink = document.querySelector('nav a[href="#"]:nth-child(4)');
+
+		  if (unsentProjectLink) unsentProjectLink.addEventListener("click", showComingSoon);
+		  if (contactLink) contactLink.addEventListener("click", showComingSoon);
+
+		  const navWrapper = document.querySelector(".nav-wrapper");
+		  if (navWrapper) {
+			navWrapper.addEventListener("wheel", (event) => {
+			  if (event.deltaY !== 0) {
+				event.preventDefault();
+				navWrapper.scrollLeft += event.deltaY;
+			  }
+			});
+		  }
+		});
+	</script>
+</head>
+<body>
+	<header>
+		<div class="title-part">
+			<h1 class="title-main">PISAY SAYOUT</h1>
+			<div class="nav-wrapper">
+				<nav>
+					<a href="index.html">CHAT</a>
+					<a href="sayout.html">SAYOUT</a>
+					<a href="#">UNSENT PROJECT</a>
+					<a href="#">CONTACT</a>
+					<a href="report.html">REPORT</a>
+					<a href="status.html" style="font-weight: bold; color: #c63ce8; text-decoration: underline;">•STATUS</a>
+				</nav>
+			</div>
+		</div>
+	</header>
+	<main>
+		<h1 class="title-report">System Status</h1>
+		<section id="systemStatus">
+			<p>Loading system status...</p>
+		</section>
+		<section id="overallStatus" style="margin-top: 2rem; font-size: 1.2rem; font-weight: bold;"></section>
+		<button onclick="checkSystemStatus()">Refresh Status</button>
+	</main>
+	<div class="footer">
+		<p>© Copyright @PISAY-SAYOUT</p>
+	</div>
+</body>
+</html>
